@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" width="560" height="160" role="img" aria-label="SahiSewaQ logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1E3A8A"/>
+      <stop offset="1" stop-color="#0D9488"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="160" rx="20" fill="#FFFFFF"/>
+  <rect x="24" y="24" width="112" height="112" rx="28" fill="url(#g)"/>
+  <circle cx="78" cy="76" r="30" fill="none" stroke="#FFFFFF" stroke-width="9"/>
+  <path d="M64 76 L74 86 L93 62" fill="none" stroke="#F59E0B" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M98 100 L112 114" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+  <text x="156" y="88" font-family="Poppins, Segoe UI, Arial, sans-serif" font-size="50" font-weight="800">
+    <tspan fill="#1E3A8A">Sahi</tspan><tspan fill="#0D9488">Sewa</tspan><tspan fill="#F59E0B">Q</tspan>
+  </text>
+  <text x="158" y="118" font-family="Poppins, Segoe UI, Arial, sans-serif" font-size="16" fill="#475569" letter-spacing="1.5">RIGHT SERVICE. ZERO WAITING.</text>
+</svg>
