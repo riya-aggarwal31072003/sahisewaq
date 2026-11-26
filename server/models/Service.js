@@ -8,8 +8,8 @@ const serviceSchema = new mongoose.Schema(
     prefix: { type: String, required: true, uppercase: true, maxlength: 3, default: "A" },
     avgDurationMin: { type: Number, default: 10, min: 1 },
     dailyTokenLimit: { type: Number, default: 100, min: 1 },
-    openTime: { type: String, default: "09:00" },
-    closeTime: { type: String, default: "17:00" },
+    openTime: { type: String, default: "09:00", match: [/^([01]\d|2[0-3]):[0-5]\d$/, "Use HH:MM format"] },
+    closeTime: { type: String, default: "17:00", match: [/^([01]\d|2[0-3]):[0-5]\d$/, "Use HH:MM format"] },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
