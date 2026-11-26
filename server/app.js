@@ -9,6 +9,7 @@ import "./models/Counter.js";
 import "./models/User.js";
 import "./models/Token.js";
 import "./models/TokenSequence.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -18,8 +19,7 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", app: "SahiSewaQ" });
 });
 
-// Day 3+ routes will be added here
-
+app.use("/api/auth", authRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
