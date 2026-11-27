@@ -15,6 +15,7 @@ import serviceRoutes from "./routes/serviceRoutes.js";
 import counterRoutes from "./routes/counterRoutes.js";
 import tokenRoutes from "./routes/tokenRoutes.js";
 import queueRoutes from "./routes/queueRoutes.js";
+import staffRoutes from "./routes/staffRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -30,6 +31,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/counters", counterRoutes);
 app.use("/api/tokens", tokenRoutes);
 app.use("/api/queue", queueRoutes);
+app.use("/api/staff", staffRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
