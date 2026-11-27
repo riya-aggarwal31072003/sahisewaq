@@ -3,6 +3,7 @@ import TokenSequence from "../models/TokenSequence.js";
 import Service from "../models/Service.js";
 import { todayIST, nowHHMM, isValidDate } from "../utils/time.js";
 import { getQueueInfo } from "../utils/queue.js";
+import { emitQueueUpdate } from "../socket.js";
 
 const MAX_DAYS_AHEAD = 7;
 const ACTIVE = ["waiting", "in-progress"];
@@ -85,7 +86,7 @@ export const createToken = async (req, res, next) => {
     doc.seq = seq;
     doc.tokenNo = tokenNo;
     await doc.save();
-
+            emitQueueUpdate(doc.serviceId, doc.date, { reason: "booked" });
         res.status(201).json({ success: true, data: doc, queue: await getQueueInfo(doc) });
   } catch (err) {
     next(err);
@@ -116,6 +117,7 @@ export const cancelToken = async (req, res, next) => {
     const token = await loadOwnedToken(req, res);
     token.status = "cancelled";
     await token.save();
+        emitQueueUpdate(token.serviceId, token.date, { reason: "cancelled" });
     res.json({ success: true, data: token });
   } catch (err) {
     next(err);
@@ -142,10 +144,13 @@ export const rescheduleToken = async (req, res, next) => {
     if (dup) fail(res, 409, `You already have an active token (${dup.tokenNo}) on that date`);
 
     const { seq, tokenNo } = await takeNumber(res, service, date);
+    const oldDate = token.date;
     token.date = date;
     token.seq = seq;
     token.tokenNo = tokenNo;
     await token.save();
+        emitQueueUpdate(token.serviceId, oldDate, { reason: "rescheduled-out" });
+    emitQueueUpdate(token.serviceId, token.date, { reason: "rescheduled-in" });
 
         res.json({ success: true, data: token, queue: await getQueueInfo(token) });
   } catch (err) {
@@ -163,6 +168,7 @@ export const setPriority = async (req, res, next) => {
     token.priority = priority;
     token.priorityReason = priority ? (req.body.reason || "").trim() : "";
     await token.save();
+        emitQueueUpdate(token.serviceId, token.date, { reason: "priority" });
 
     res.json({ success: true, data: token, queue: await getQueueInfo(token) });
   } catch (err) {
