@@ -2,6 +2,7 @@ import Token from "../models/Token.js";
 import TokenSequence from "../models/TokenSequence.js";
 import Service from "../models/Service.js";
 import { todayIST, nowHHMM, isValidDate } from "../utils/time.js";
+import { getQueueInfo } from "../utils/queue.js";
 
 const MAX_DAYS_AHEAD = 7;
 const ACTIVE = ["waiting", "in-progress"];
@@ -85,7 +86,7 @@ export const createToken = async (req, res, next) => {
     doc.tokenNo = tokenNo;
     await doc.save();
 
-    res.status(201).json({ success: true, data: doc });
+        res.status(201).json({ success: true, data: doc, queue: await getQueueInfo(doc) });
   } catch (err) {
     next(err);
   }
@@ -146,7 +147,24 @@ export const rescheduleToken = async (req, res, next) => {
     token.tokenNo = tokenNo;
     await token.save();
 
-    res.json({ success: true, data: token });
+        res.json({ success: true, data: token, queue: await getQueueInfo(token) });
+  } catch (err) {
+    next(err);
+  }
+};
+// PUT /api/tokens/:id/priority   (admin)   body: { priority: true, reason: "Senior citizen" }
+export const setPriority = async (req, res, next) => {
+  try {
+    const token = await Token.findById(req.params.id);
+    if (!token) fail(res, 404, "Token not found");
+    if (token.status !== "waiting") fail(res, 400, `Token is already ${token.status}`);
+
+    const priority = req.body.priority !== false; // default: make priority
+    token.priority = priority;
+    token.priorityReason = priority ? (req.body.reason || "").trim() : "";
+    await token.save();
+
+    res.json({ success: true, data: token, queue: await getQueueInfo(token) });
   } catch (err) {
     next(err);
   }
