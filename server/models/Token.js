@@ -21,6 +21,7 @@ const tokenSchema = new mongoose.Schema(
       default: "waiting",
     },
     priority: { type: Boolean, default: false },
+        priorityReason: { type: String, trim: true, default: "" },
     calledAt: Date,
     completedAt: Date,
   },
