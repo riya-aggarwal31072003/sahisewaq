@@ -3,7 +3,7 @@ import Logo from "./Logo.jsx";
 
 export default function Footer() {
   return (
-    <footer className="mt-16 bg-brand-navy text-slate-200">
+    <footer className="print:hidden mt-16 bg-brand-navy text-slate-200">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
         <div>
           <Logo size={36} light />

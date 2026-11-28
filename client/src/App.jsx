@@ -6,6 +6,8 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import ComingSoon from "./pages/ComingSoon.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Book from "./pages/Book.jsx";
+import TokenSuccess from "./pages/TokenSuccess.jsx";
 
 export default function App() {
   return (
@@ -14,7 +16,8 @@ export default function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/book" element={<ComingSoon title="Book a Token" day={9} />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/token" element={<TokenSuccess />} />
           <Route path="/track" element={<ComingSoon title="Track Your Token" day={10} />} />
           <Route path="/login" element={<Login />} />
           <Route

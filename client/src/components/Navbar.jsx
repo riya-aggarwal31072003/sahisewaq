@@ -28,7 +28,7 @@ export default function Navbar() {
   const dashboard = user?.role === "admin" ? "/admin" : "/staff";
 
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <header className="print:hidden sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/" onClick={() => setOpen(false)} aria-label="SahiSewaQ home">
           <Logo size={36} />
